@@ -62,12 +62,109 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-hexo给文章添加分类和标签" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/02/hexo给文章添加分类和标签/" class="article-date">
+  <time datetime="2018-04-02T07:05:51.000Z" itemprop="datePublished">2018-04-02</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/教程/">教程</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/02/hexo给文章添加分类和标签/">hexo给文章添加分类和标签</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a href="https://linlif.github.io/2017/05/27/Hexo%E4%BD%BF%E7%94%A8%E6%94%BB%E7%95%A5-%E6%B7%BB%E5%8A%A0%E5%88%86%E7%B1%BB%E5%8F%8A%E6%A0%87%E7%AD%BE/" target="_blank" rel="noopener">本文为转转，原文链接</a></p>
+<pre><code>本教程针对的是Mac环境下，nexT主题的文章分类和标签设置，其他主题也应该是类似的。添加成功后会在侧边栏或导航栏生成“分类”和“标签”这两个选项，看下图：
+</code></pre><p>文章分类、标签</p>
+<p>点击“分类”后的页面：</p>
+<p>文章分类页</p>
+<p>点击“标签”后的页面：</p>
+<p>标签</p>
+<p>ok，大概效果就是这样的，下面进入教程</p>
+<p>1、创建“分类”选项<br>1.1 生成“分类”页并添加tpye属性<br>打开命令行，进入博客所在文件夹。执行命令</p>
+<p>$ hexo new page categories<br>成功后会提示：</p>
+<p>INFO  Created: ~/Documents/blog/source/categories/index.md<br>根据上面的路径，找到index.md这个文件，打开后默认内容是这样的：</p>
+<hr>
+<p>title: 文章分类</p>
+<h2 id="date-2017-05-27-13-47-40"><a href="#date-2017-05-27-13-47-40" class="headerlink" title="date: 2017-05-27 13:47:40"></a>date: 2017-05-27 13:47:40</h2><p>添加type: “categories”到内容中，添加后是这样的：</p>
+<hr>
+<p>title: 文章分类<br>date: 2017-05-27 13:47:40</p>
+<h2 id="type-“categories”"><a href="#type-“categories”" class="headerlink" title="type: “categories”"></a>type: “categories”</h2><p>保存并关闭文件。</p>
+<p>1.2 给文章添加“categories”属性<br>打开需要添加分类的文章，为其添加categories属性。下方的categories: web前端表示添加这篇文章到“web前端”这个分类。注意：hexo一篇文章只能属于一个分类，也就是说如果在“- web前端”下方添加“-xxx”，hexo不会产生两个分类，而是把分类嵌套（即该文章属于 “- web前端”下的 “-xxx ”分类）。</p>
+<hr>
+<p>title: jQuery对表单的操作及更多应用<br>date: 2017-05-26 12:12:57<br>categories: </p>
+<ul>
+<li>web前端</li>
+</ul>
+<hr>
+<p>至此，成功给文章添加分类，点击首页的“分类”可以看到该分类下的所有文章。当然，只有添加了categories: xxx的文章才会被收录到首页的“分类”中。</p>
+<p>2、创建“标签”选项<br>2.1 生成“标签”页并添加tpye属性<br>打开命令行，进入博客所在文件夹。执行命令</p>
+<p>$ hexo new page tags<br>成功后会提示：</p>
+<p>INFO  Created: ~/Documents/blog/source/tags/index.md<br>根据上面的路径，找到index.md这个文件，打开后默认内容是这样的：</p>
+<hr>
+<p>title: 标签</p>
+<h2 id="date-2017-05-27-14-22-08"><a href="#date-2017-05-27-14-22-08" class="headerlink" title="date: 2017-05-27 14:22:08"></a>date: 2017-05-27 14:22:08</h2><p>添加type: “tags”到内容中，添加后是这样的：</p>
+<hr>
+<p>title: 文章分类<br>date: 2017-05-27 13:47:40</p>
+<h2 id="type-“tags”"><a href="#type-“tags”" class="headerlink" title="type: “tags”"></a>type: “tags”</h2><p>保存并关闭文件。</p>
+<p>2.2 给文章添加“tags”属性<br>打开需要添加标签的文章，为其添加tags属性。下方的tags:下方的- jQuery - 表格</p>
+<ul>
+<li>表单验证就是这篇文章的标签了</li>
+</ul>
+<hr>
+<p>title: jQuery对表单的操作及更多应用<br>date: 2017-05-26 12:12:57<br>categories: </p>
+<ul>
+<li>web前端<br>tags:</li>
+<li>jQuery</li>
+<li>表格</li>
+<li>表单验证</li>
+</ul>
+<hr>
+<p>至此，成功给文章添加分类，点击首页的“标签”可以看到该标签下的所有文章。当然，只有添加了tags: xxx的文章才会被收录到首页的“标签”中。</p>
+<p>细心的朋友可能已经发现，这两个的设置几乎一模一样！是的，没错，思路都是一样的。所以我们可以打开scaffolds/post.md文件，在tages:上面加入categories:,保存后，之后执行hexo new 文章名命令生成的文件，页面里就有categories:项了。</p>
+<p>scaffolds目录下，是新建页面的模板，执行新建命令时，是根据这里的模板页来完成的，所以可以在这里根据你自己的需求添加一些默认值。</p>
+<p>教程结束，赶紧去设置吧！</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/04/02/hexo给文章添加分类和标签/" data-id="cjfhwc6a70007akujnnte31uc" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/摘抄/">摘抄</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/文档/">文档</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Cherry" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/03/30/Cherry/" class="article-date">
   <time datetime="2018-03-30T08:35:14.000Z" itemprop="datePublished">2018-03-30</time>
 </a>
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/test/">test</a>
+  </div>
+
   </div>
   <div class="article-inner">
     
@@ -135,9 +232,11 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/30/Cherry/" data-id="cjfdqnhh70001ucuje6buls9x" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/30/Cherry/" data-id="cjfhwc69l0000akuj2xpkdiz9" class="article-share-link">Share</a>
       
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/心情/">心情</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/摘抄/">摘抄</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/美文/">美文</a></li></ul>
+
     </footer>
   </div>
   
@@ -151,6 +250,10 @@
   <time datetime="2018-03-30T07:03:27.000Z" itemprop="datePublished">2018-03-30</time>
 </a>
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/test/">test</a>
+  </div>
+
   </div>
   <div class="article-inner">
     
@@ -176,9 +279,11 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/30/My-New-Post/" data-id="cjfdqnhgx0000ucujqkhd5nc0" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/30/My-New-Post/" data-id="cjfhwc69v0002akuja6jk3cqq" class="article-share-link">Share</a>
       
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/测试/">测试</a></li></ul>
+
     </footer>
   </div>
   
@@ -192,6 +297,10 @@
   <time datetime="2018-03-29T09:23:41.870Z" itemprop="datePublished">2018-03-29</time>
 </a>
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/test/">test</a>
+  </div>
+
   </div>
   <div class="article-inner">
     
@@ -221,9 +330,11 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/29/hello-world/" data-id="cjfdqnhhb0002ucujkk53s9xa" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/29/hello-world/" data-id="cjfhwc6a40006akujplt91snb" class="article-share-link">Share</a>
       
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/测试/">测试</a></li></ul>
+
     </footer>
   </div>
   
@@ -238,18 +349,39 @@
           <aside id="sidebar">
   
     
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/test/">test</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/教程/">教程</a></li></ul>
+    </div>
+  </div>
+
 
   
     
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/心情/">心情</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/摘抄/">摘抄</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/文档/">文档</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/测试/">测试</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/美文/">美文</a></li></ul>
+    </div>
+  </div>
+
 
   
     
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/心情/" style="font-size: 10px;">心情</a> <a href="/tags/摘抄/" style="font-size: 20px;">摘抄</a> <a href="/tags/文档/" style="font-size: 10px;">文档</a> <a href="/tags/测试/" style="font-size: 20px;">测试</a> <a href="/tags/美文/" style="font-size: 10px;">美文</a>
+    </div>
+  </div>
+
   
     
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li></ul>
     </div>
   </div>
 
@@ -260,6 +392,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/04/02/hexo给文章添加分类和标签/">hexo给文章添加分类和标签</a>
+          </li>
         
           <li>
             <a href="/2018/03/30/Cherry/">Cherry</a>
