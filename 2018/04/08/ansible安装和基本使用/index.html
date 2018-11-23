@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>ansible安装和基本使用 | Tyronelitw的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="技术ansible自动化文档">
+  
+  
+  
+  
+  <meta name="description" content="安装配置1、安装1[root@litw-docker ~]# yum install ansible -y 2、配置秘钥免密认证1234567891011121314151617181920212223242526272829303132333435363738394041424344[root@litw-docker ~]# ssh-keygenGenerating public/private">
+<meta name="keywords" content="技术,ansible,自动化,文档">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ansible安装和基本使用">
+<meta property="og:url" content="https://Tyronelitw.github.io/2018/04/08/ansible安装和基本使用/index.html">
+<meta property="og:site_name" content="Tyronelitw的博客">
+<meta property="og:description" content="安装配置1、安装1[root@litw-docker ~]# yum install ansible -y 2、配置秘钥免密认证1234567891011121314151617181920212223242526272829303132333435363738394041424344[root@litw-docker ~]# ssh-keygenGenerating public/private">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-11-23T14:13:15.941Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ansible安装和基本使用">
+<meta name="twitter:description" content="安装配置1、安装1[root@litw-docker ~]# yum install ansible -y 2、配置秘钥免密认证1234567891011121314151617181920212223242526272829303132333435363738394041424344[root@litw-docker ~]# ssh-keygenGenerating public/private">
+  
+    <link rel="alternate" href="/atom.xml" title="Tyronelitw的博客" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css">
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css">
+  
+
+  
+  
+  
+    <link rel="stylesheet" href="/css/vdonate.css">
+  
+
+</head>
+</html>
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;" href="#" data-toggle="modal" data-target="#myModal">
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Home</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">Archives</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">Categories</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">About</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="">
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something...">
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </ul></div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-ansible安装和基本使用" style="width: 75%; float:left;" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      ansible安装和基本使用
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/04/08/ansible安装和基本使用/" class="article-date">
+	  <time datetime="2018-04-08T09:31:37.000Z" itemprop="datePublished">2018-04-08</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="安装配置"><a href="#安装配置" class="headerlink" title="安装配置"></a>安装配置</h2><h1 id="1、安装"><a href="#1、安装" class="headerlink" title="1、安装"></a>1、安装</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@litw-docker ~]<span class="comment"># yum install ansible -y</span></span><br></pre></td></tr></table></figure>
+<h1 id="2、配置秘钥免密认证"><a href="#2、配置秘钥免密认证" class="headerlink" title="2、配置秘钥免密认证"></a>2、配置秘钥免密认证</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">[root@litw-docker ~]<span class="comment"># ssh-keygen</span></span><br><span class="line">Generating public/private rsa key pair.</span><br><span class="line">Enter file <span class="keyword">in</span> <span class="built_in">which</span> to save the key (/root/.ssh/id_rsa): </span><br><span class="line">Enter passphrase (empty <span class="keyword">for</span> no passphrase): </span><br><span class="line">Enter same passphrase again: </span><br><span class="line">Your identification has been saved <span class="keyword">in</span> /root/.ssh/id_rsa.</span><br><span class="line">Your public key has been saved <span class="keyword">in</span> /root/.ssh/id_rsa.pub.</span><br><span class="line">The key fingerprint is:</span><br><span class="line">63:0f:67:df:2e:9d:3c:9b:41:b5:f4:85:03:ad:db:78 root@litw-docker.novalocal</span><br><span class="line">The key<span class="string">'s randomart image is:</span></span><br><span class="line"><span class="string">+--[ RSA 2048]----+</span></span><br><span class="line"><span class="string">|            ..   |</span></span><br><span class="line"><span class="string">|             ... |</span></span><br><span class="line"><span class="string">|             .o.o|</span></span><br><span class="line"><span class="string">|            . .o+|</span></span><br><span class="line"><span class="string">|        S o  +...|</span></span><br><span class="line"><span class="string">|       . * .ooE  |</span></span><br><span class="line"><span class="string">|          . .+o. |</span></span><br><span class="line"><span class="string">|            ..=o |</span></span><br><span class="line"><span class="string">|             .+o |</span></span><br><span class="line"><span class="string">+-----------------+</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">[root@litw-docker ~]# ssh-copy-id root@192.168.101.6</span></span><br><span class="line"><span class="string">/usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed</span></span><br><span class="line"><span class="string">/usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys</span></span><br><span class="line"><span class="string">root@192.168.101.6'</span>s password: </span><br><span class="line"></span><br><span class="line">Number of key(s) added: 1</span><br><span class="line"></span><br><span class="line">Now try logging into the machine, with:   <span class="string">"ssh 'root@192.168.101.6'"</span></span><br><span class="line">and check to make sure that only the key(s) you wanted were added.</span><br><span class="line"></span><br><span class="line">[root@litw-docker ~]<span class="comment"># ssh-copy-id root@192.168.101.11</span></span><br><span class="line">The authenticity of host <span class="string">'192.168.101.11 (192.168.101.11)'</span> can<span class="string">'t be established.</span></span><br><span class="line"><span class="string">ECDSA key fingerprint is dd:a8:4a:aa:a3:09:92:50:50:53:e8:de:76:83:0c:05.</span></span><br><span class="line"><span class="string">Are you sure you want to continue connecting (yes/no)? yes</span></span><br><span class="line"><span class="string">/usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed</span></span><br><span class="line"><span class="string">/usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys</span></span><br><span class="line"><span class="string">root@192.168.101.11'</span>s password: </span><br><span class="line"></span><br><span class="line">Number of key(s) added: 1</span><br><span class="line"></span><br><span class="line">Now try logging into the machine, with:   <span class="string">"ssh 'root@192.168.101.11'"</span></span><br><span class="line">and check to make sure that only the key(s) you wanted were added.</span><br></pre></td></tr></table></figure>
+<!--read more-->
+<h1 id="3、修改ansible配置hosts文件"><a href="#3、修改ansible配置hosts文件" class="headerlink" title="3、修改ansible配置hosts文件"></a>3、修改ansible配置hosts文件</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/ansible/hosts</span><br><span class="line">[<span class="built_in">test</span>]</span><br><span class="line">192.168.101.6</span><br><span class="line">192.168.101.11</span><br></pre></td></tr></table></figure>
+<h2 id="ansible基本使用（模块）"><a href="#ansible基本使用（模块）" class="headerlink" title="ansible基本使用（模块）"></a>ansible基本使用（模块）</h2><h1 id="1、ping"><a href="#1、ping" class="headerlink" title="1、ping"></a>1、ping</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@litw-docker ~]<span class="comment"># ansible test -m ping</span></span><br><span class="line">192.168.101.6 | SUCCESS =&gt; &#123;</span><br><span class="line">    <span class="string">"changed"</span>: <span class="literal">false</span>, </span><br><span class="line">    <span class="string">"ping"</span>: <span class="string">"pong"</span></span><br><span class="line">&#125;</span><br><span class="line">192.168.101.11 | SUCCESS =&gt; &#123;</span><br><span class="line">    <span class="string">"changed"</span>: <span class="literal">false</span>, </span><br><span class="line">    <span class="string">"ping"</span>: <span class="string">"pong"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="2、shell-command"><a href="#2、shell-command" class="headerlink" title="2、shell/command"></a>2、shell/command</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">[root@litw-docker ~]<span class="comment"># ansible test -m shell -a "ps aux | grep -c sshd"</span></span><br><span class="line">192.168.101.6 | SUCCESS | rc=0 &gt;&gt;</span><br><span class="line">5</span><br><span class="line"></span><br><span class="line">192.168.101.11 | SUCCESS | rc=0 &gt;&gt;</span><br><span class="line">5</span><br><span class="line"></span><br><span class="line">[root@litw-docker ~]<span class="comment"># ansible test -m command -a "ps aux | grep -c sshd"</span></span><br><span class="line">192.168.101.6 | FAILED | rc=1 &gt;&gt;</span><br><span class="line">error: garbage option</span><br><span class="line"></span><br><span class="line">Usage:</span><br><span class="line"> ps [options]</span><br><span class="line"></span><br><span class="line"> Try <span class="string">'ps --help &lt;simple|list|output|threads|misc|all&gt;'</span></span><br><span class="line">  or <span class="string">'ps --help &lt;s|l|o|t|m|a&gt;'</span></span><br><span class="line"> <span class="keyword">for</span> additional <span class="built_in">help</span> text.</span><br><span class="line"></span><br><span class="line">For more details see ps(1).non-zero <span class="built_in">return</span> code</span><br><span class="line"></span><br><span class="line">192.168.101.11 | FAILED | rc=1 &gt;&gt;</span><br><span class="line">error: garbage option</span><br><span class="line"></span><br><span class="line">Usage:</span><br><span class="line"> ps [options]</span><br><span class="line"></span><br><span class="line"> Try <span class="string">'ps --help &lt;simple|list|output|threads|misc|all&gt;'</span></span><br><span class="line">  or <span class="string">'ps --help &lt;s|l|o|t|m|a&gt;'</span></span><br><span class="line"> <span class="keyword">for</span> additional <span class="built_in">help</span> text.</span><br><span class="line"></span><br><span class="line">For more details see ps(1).non-zero <span class="built_in">return</span> code</span><br><span class="line"></span><br><span class="line">[root@litw-docker ~]<span class="comment"># ansible test -m command -a "uptime"</span></span><br><span class="line">192.168.101.6 | SUCCESS | rc=0 &gt;&gt;</span><br><span class="line"> 17:48:14 up 11 days, 54 min,  2 users,  load average: 0.07, 0.04, 0.05</span><br><span class="line"></span><br><span class="line">192.168.101.11 | SUCCESS | rc=0 &gt;&gt;</span><br><span class="line"> 17:48:14 up 11 days, 54 min,  2 users,  load average: 0.00, 0.01, 0.05</span><br></pre></td></tr></table></figure>
+<p>可以看到command和shell模块最明显的区别是shell执行命令可以使用管道，command不可以。</p>
+<h1 id="3、copy"><a href="#3、copy" class="headerlink" title="3、copy"></a>3、copy</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">[root@litw-docker ~]<span class="comment"># ansible test -m copy -a "src=/root/ip.txt dest=/tmp/test owner=root group=root mode=600"</span></span><br><span class="line">192.168.101.11 | SUCCESS =&gt; &#123;</span><br><span class="line">    <span class="string">"changed"</span>: <span class="literal">true</span>, </span><br><span class="line">    <span class="string">"checksum"</span>: <span class="string">"1ec0d33dd7cfee811a9d0fc833d8d0b861084c95"</span>, </span><br><span class="line">    <span class="string">"dest"</span>: <span class="string">"/tmp/test"</span>, </span><br><span class="line">    <span class="string">"gid"</span>: 0, </span><br><span class="line">    <span class="string">"group"</span>: <span class="string">"root"</span>, </span><br><span class="line">    <span class="string">"md5sum"</span>: <span class="string">"885a3db6120c0857ecd8a5e71a3c8400"</span>, </span><br><span class="line">    <span class="string">"mode"</span>: <span class="string">"0600"</span>, </span><br><span class="line">    <span class="string">"owner"</span>: <span class="string">"root"</span>, </span><br><span class="line">    <span class="string">"size"</span>: 57, </span><br><span class="line">    <span class="string">"src"</span>: <span class="string">"/root/.ansible/tmp/ansible-tmp-1523181044.35-147146951272504/source"</span>, </span><br><span class="line">    <span class="string">"state"</span>: <span class="string">"file"</span>, </span><br><span class="line">    <span class="string">"uid"</span>: 0</span><br><span class="line">&#125;</span><br><span class="line">192.168.101.6 | SUCCESS =&gt; &#123;</span><br><span class="line">    <span class="string">"changed"</span>: <span class="literal">true</span>, </span><br><span class="line">    <span class="string">"checksum"</span>: <span class="string">"1ec0d33dd7cfee811a9d0fc833d8d0b861084c95"</span>, </span><br><span class="line">    <span class="string">"dest"</span>: <span class="string">"/tmp/test"</span>, </span><br><span class="line">    <span class="string">"gid"</span>: 0, </span><br><span class="line">    <span class="string">"group"</span>: <span class="string">"root"</span>, </span><br><span class="line">    <span class="string">"md5sum"</span>: <span class="string">"885a3db6120c0857ecd8a5e71a3c8400"</span>, </span><br><span class="line">    <span class="string">"mode"</span>: <span class="string">"0600"</span>, </span><br><span class="line">    <span class="string">"owner"</span>: <span class="string">"root"</span>, </span><br><span class="line">    <span class="string">"size"</span>: 57, </span><br><span class="line">    <span class="string">"src"</span>: <span class="string">"/root/.ansible/tmp/ansible-tmp-1523181044.34-260315740643744/source"</span>, </span><br><span class="line">    <span class="string">"state"</span>: <span class="string">"file"</span>, </span><br><span class="line">    <span class="string">"uid"</span>: 0</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="4、service"><a href="#4、service" class="headerlink" title="4、service"></a>4、service</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br></pre></td><td class="code"><pre><span class="line">[root@litw-docker ~]<span class="comment"># ansible test -m service -a "name=sshd state=started"</span></span><br><span class="line">192.168.101.11 | SUCCESS =&gt; &#123;</span><br><span class="line">    <span class="string">"changed"</span>: <span class="literal">false</span>, </span><br><span class="line">    <span class="string">"name"</span>: <span class="string">"sshd"</span>, </span><br><span class="line">    <span class="string">"state"</span>: <span class="string">"started"</span>, </span><br><span class="line">    <span class="string">"status"</span>: &#123;</span><br><span class="line">        <span class="string">"ActiveEnterTimestamp"</span>: <span class="string">"Wed 2018-03-28 16:54:21 CST"</span>, </span><br><span class="line">        <span class="string">"ActiveEnterTimestampMonotonic"</span>: <span class="string">"39061736"</span>, </span><br><span class="line">        <span class="string">"ActiveExitTimestamp"</span>: <span class="string">"Wed 2018-03-28 16:54:21 CST"</span>, </span><br><span class="line">        <span class="string">"ActiveExitTimestampMonotonic"</span>: <span class="string">"39051401"</span>, </span><br><span class="line">        <span class="string">"ActiveState"</span>: <span class="string">"active"</span>, </span><br><span class="line">        <span class="string">"After"</span>: <span class="string">"network.target system.slice systemd-journald.socket syslog.target auditd.service basic.target cloud-init.service"</span>, </span><br><span class="line">        <span class="string">"AllowIsolate"</span>: <span class="string">"no"</span>, </span><br><span class="line">        <span class="string">"AmbientCapabilities"</span>: <span class="string">"0"</span>, </span><br><span class="line">        <span class="string">"AssertResult"</span>: <span class="string">"yes"</span>, </span><br><span class="line">        <span class="string">"AssertTimestamp"</span>: <span class="string">"Wed 2018-03-28 16:54:21 CST"</span>, </span><br><span class="line">        <span class="string">"AssertTimestampMonotonic"</span>: <span class="string">"39053249"</span>, </span><br><span class="line">        <span class="string">"Before"</span>: <span class="string">"multi-user.target shutdown.target"</span>, </span><br><span class="line">        <span class="string">"BlockIOAccounting"</span>: <span class="string">"no"</span>, </span><br><span class="line">        <span class="string">"BlockIOWeight"</span>: <span class="string">"18446744073709551615"</span>, </span><br><span class="line">        <span class="string">"CPUAccounting"</span>: <span class="string">"no"</span>, </span><br><span class="line">        <span class="string">"CPUQuotaPerSecUSec"</span>: <span class="string">"infinity"</span>, </span><br><span class="line">        <span class="string">"CPUSchedulingPolicy"</span>: <span class="string">"0"</span>, </span><br><span class="line">        <span class="string">"CPUSchedulingPriority"</span>: <span class="string">"0"</span>, </span><br><span class="line">        <span class="string">"CPUSchedulingResetOnFork"</span>: <span class="string">"no"</span>, </span><br><span class="line">        <span class="string">"CPUShares"</span>: <span class="string">"18446744073709551615"</span>, </span><br><span class="line">        <span class="string">"CanIsolate"</span>: <span class="string">"no"</span>, </span><br><span class="line">        <span class="string">"CanReload"</span>: <span class="string">"yes"</span>, </span><br><span class="line">        <span class="string">"CanStart"</span>: <span class="string">"yes"</span>, </span><br><span class="line">        <span class="string">"CanStop"</span>: <span class="string">"yes"</span>, </span><br><span class="line">        <span class="string">"CapabilityBoundingSet"</span>: <span class="string">"18446744073709551615"</span>, </span><br><span class="line">        <span class="string">"ConditionResult"</span>: <span class="string">"yes"</span>, </span><br><span class="line">        <span class="string">"ConditionTimestamp"</span>: <span class="string">"Wed 2018-03-28 16:54:21 CST"</span>, </span><br><span class="line">        <span class="string">"ConditionTimestampMonotonic"</span>: <span class="string">"39053249"</span>, </span><br><span class="line">        <span class="string">"Conflicts"</span>: <span class="string">"shutdown.target"</span>, </span><br><span class="line">        <span class="string">"ControlGroup"</span>: <span class="string">"/system.slice/sshd.service"</span>, </span><br><span class="line">        <span class="string">"ControlPID"</span>: <span class="string">"0"</span>, </span><br><span class="line">        <span class="string">"DefaultDependencies"</span>: <span class="string">"yes"</span>, </span><br><span class="line">        <span class="string">"Delegate"</span>: <span class="string">"no"</span>, </span><br><span class="line">        <span class="string">"Description"</span>: <span class="string">"OpenSSH server daemon"</span>, </span><br><span class="line">        <span class="string">"DevicePolicy"</span>: <span class="string">"auto"</span>, </span><br><span class="line">        <span class="string">"EnvironmentFile"</span>: <span class="string">"/etc/sysconfig/sshd (ignore_errors=no)"</span>, </span><br><span class="line">        <span class="string">"ExecMainCode"</span>: <span class="string">"0"</span>, </span><br><span class="line">        <span class="string">"ExecMainExitTimestampMonotonic"</span>: <span class="string">"0"</span>, </span><br><span class="line">        <span class="string">"ExecMainPID"</span>: <span class="string">"946"</span>, </span><br><span class="line">        <span class="string">"ExecMainStartTimestamp"</span>: <span class="string">"Wed 2018-03-28 16:54:21 CST"</span>, </span><br><span class="line">        <span class="string">"ExecMainStartTimestampMonotonic"</span>: <span class="string">"39061689"</span>, </span><br><span class="line">        <span class="string">"ExecMainStatus"</span>: <span class="string">"0"</span>, </span><br><span class="line">        <span class="string">"ExecReload"</span>: <span class="string">"&#123; path=/bin/kill ; argv[]=/bin/kill -HUP <span class="variable">$MAINPID</span> ; ignore_errors=no ; start_time=[n/a] ; stop_time=[n/a] ; pid=0 ; code=(null) ; status=0/0 &#125;"</span>, </span><br><span class="line">        <span class="string">"ExecStart"</span>: <span class="string">"&#123; path=/usr/sbin/sshd ; argv[]=/usr/sbin/sshd -D <span class="variable">$OPTIONS</span> ; ignore_errors=no ; start_time=[Wed 2018-03-28 16:54:21 CST] ; stop_time=[n/a] ; pid=946 ; code=(null) ; status=0/0 &#125;"</span>, </span><br><span class="line">        <span class="string">"ExecStartPre"</span>: <span class="string">"&#123; path=/usr/sbin/sshd-keygen ; argv[]=/usr/sbin/sshd-keygen ; ignore_errors=no ; start_time=[Wed 2018-03-28 16:54:21 CST] ; stop_time=[Wed 2018-03-28 16:54:21 CST] ; pid=943 ; code=exited ; status=0 &#125;"</span>, </span><br><span class="line">        <span class="string">"FailureAction"</span>: <span class="string">"none"</span>, </span><br><span class="line">        <span class="string">"FileDescriptorStoreMax"</span>: <span class="string">"0"</span>, </span><br><span class="line">        <span class="string">"FragmentPath"</span>: <span class="string">"/usr/lib/systemd/system/sshd.service"</span>, </span><br><span class="line">        <span class="string">"GuessMainPID"</span>: <span class="string">"yes"</span>, </span><br><span class="line">        <span class="string">"IOScheduling"</span>: <span class="string">"0"</span>, </span><br><span class="line">        <span class="string">"Id"</span>: <span class="string">"sshd.service"</span>, </span><br><span class="line">        <span class="string">"IgnoreOnIsolate"</span>: <span class="string">"no"</span>, </span><br><span class="line">        <span class="string">"IgnoreOnSnapshot"</span>: <span class="string">"no"</span>, </span><br><span class="line">        <span class="string">"IgnoreSIGPIPE"</span>: <span class="string">"yes"</span>, </span><br><span class="line">        <span class="string">"InactiveEnterTimestamp"</span>: <span class="string">"Wed 2018-03-28 16:54:21 CST"</span>, </span><br><span class="line">        <span class="string">"InactiveEnterTimestampMonotonic"</span>: <span class="string">"39052998"</span>, </span><br><span class="line">        <span class="string">"InactiveExitTimestamp"</span>: <span class="string">"Wed 2018-03-28 16:54:21 CST"</span>, </span><br><span class="line">        <span class="string">"InactiveExitTimestampMonotonic"</span>: <span class="string">"39053607"</span>, </span><br><span class="line">        <span class="string">"JobTimeoutAction"</span>: <span class="string">"none"</span>, </span><br><span class="line">        <span class="string">"JobTimeoutUSec"</span>: <span class="string">"0"</span>, </span><br><span class="line">        <span class="string">"KillMode"</span>: <span class="string">"process"</span>, </span><br><span class="line">        <span class="string">"KillSignal"</span>: <span class="string">"15"</span>, </span><br><span class="line">        <span class="string">"LimitAS"</span>: <span class="string">"18446744073709551615"</span>, </span><br><span class="line">        <span class="string">"LimitCORE"</span>: <span class="string">"18446744073709551615"</span>, </span><br><span class="line">        <span class="string">"LimitCPU"</span>: <span class="string">"18446744073709551615"</span>, </span><br><span class="line">        <span class="string">"LimitDATA"</span>: <span class="string">"18446744073709551615"</span>, </span><br><span class="line">        <span class="string">"LimitFSIZE"</span>: <span class="string">"18446744073709551615"</span>, </span><br><span class="line">        <span class="string">"LimitLOCKS"</span>: <span class="string">"18446744073709551615"</span>, </span><br><span class="line">        <span class="string">"LimitMEMLOCK"</span>: <span class="string">"65536"</span>, </span><br><span class="line">        <span class="string">"LimitMSGQUEUE"</span>: <span class="string">"819200"</span>, </span><br><span class="line">        <span class="string">"LimitNICE"</span>: <span class="string">"0"</span>, </span><br><span class="line">        <span class="string">"LimitNOFILE"</span>: <span class="string">"4096"</span>, </span><br><span class="line">        <span class="string">"LimitNPROC"</span>: <span class="string">"14644"</span>, </span><br><span class="line">        <span class="string">"LimitRSS"</span>: <span class="string">"18446744073709551615"</span>, </span><br><span class="line">        <span class="string">"LimitRTPRIO"</span>: <span class="string">"0"</span>, </span><br><span class="line">        <span class="string">"LimitRTTIME"</span>: <span class="string">"18446744073709551615"</span>, </span><br><span class="line">        <span class="string">"LimitSIGPENDING"</span>: <span class="string">"14644"</span>, </span><br><span class="line">        <span class="string">"LimitSTACK"</span>: <span class="string">"18446744073709551615"</span>, </span><br><span class="line">        <span class="string">"LoadState"</span>: <span class="string">"loaded"</span>, </span><br><span class="line">        <span class="string">"MainPID"</span>: <span class="string">"946"</span>, </span><br><span class="line">        <span class="string">"MemoryAccounting"</span>: <span class="string">"no"</span>, </span><br><span class="line">        <span class="string">"MemoryCurrent"</span>: <span class="string">"18446744073709551615"</span>, </span><br><span class="line">        <span class="string">"MemoryLimit"</span>: <span class="string">"18446744073709551615"</span>, </span><br><span class="line">        <span class="string">"MountFlags"</span>: <span class="string">"0"</span>, </span><br><span class="line">        <span class="string">"Names"</span>: <span class="string">"sshd.service"</span>, </span><br><span class="line">        <span class="string">"NeedDaemonReload"</span>: <span class="string">"no"</span>, </span><br><span class="line">        <span class="string">"Nice"</span>: <span class="string">"0"</span>, </span><br><span class="line">        <span class="string">"NoNewPrivileges"</span>: <span class="string">"no"</span>, </span><br><span class="line">        <span class="string">"NonBlocking"</span>: <span class="string">"no"</span>, </span><br><span class="line">        <span class="string">"NotifyAccess"</span>: <span class="string">"none"</span>, </span><br><span class="line">        <span class="string">"OOMScoreAdjust"</span>: <span class="string">"0"</span>, </span><br><span class="line">        <span class="string">"OnFailureJobMode"</span>: <span class="string">"replace"</span>, </span><br><span class="line">        <span class="string">"PermissionsStartOnly"</span>: <span class="string">"no"</span>, </span><br><span class="line">        <span class="string">"PrivateDevices"</span>: <span class="string">"no"</span>, </span><br><span class="line">        <span class="string">"PrivateNetwork"</span>: <span class="string">"no"</span>, </span><br><span class="line">        <span class="string">"PrivateTmp"</span>: <span class="string">"no"</span>, </span><br><span class="line">        <span class="string">"ProtectHome"</span>: <span class="string">"no"</span>, </span><br><span class="line">        <span class="string">"ProtectSystem"</span>: <span class="string">"no"</span>, </span><br><span class="line">        <span class="string">"RefuseManualStart"</span>: <span class="string">"no"</span>, </span><br><span class="line">        <span class="string">"RefuseManualStop"</span>: <span class="string">"no"</span>, </span><br><span class="line">        <span class="string">"RemainAfterExit"</span>: <span class="string">"no"</span>, </span><br><span class="line">        <span class="string">"Requires"</span>: <span class="string">"basic.target"</span>, </span><br><span class="line">        <span class="string">"Restart"</span>: <span class="string">"on-failure"</span>, </span><br><span class="line">        <span class="string">"RestartUSec"</span>: <span class="string">"42s"</span>, </span><br><span class="line">        <span class="string">"Result"</span>: <span class="string">"success"</span>, </span><br><span class="line">        <span class="string">"RootDirectoryStartOnly"</span>: <span class="string">"no"</span>, </span><br><span class="line">        <span class="string">"RuntimeDirectoryMode"</span>: <span class="string">"0755"</span>, </span><br><span class="line">        <span class="string">"SameProcessGroup"</span>: <span class="string">"no"</span>, </span><br><span class="line">        <span class="string">"SecureBits"</span>: <span class="string">"0"</span>, </span><br><span class="line">        <span class="string">"SendSIGHUP"</span>: <span class="string">"no"</span>, </span><br><span class="line">        <span class="string">"SendSIGKILL"</span>: <span class="string">"yes"</span>, </span><br><span class="line">        <span class="string">"Slice"</span>: <span class="string">"system.slice"</span>, </span><br><span class="line">        <span class="string">"StandardError"</span>: <span class="string">"inherit"</span>, </span><br><span class="line">        <span class="string">"StandardInput"</span>: <span class="string">"null"</span>, </span><br><span class="line">        <span class="string">"StandardOutput"</span>: <span class="string">"journal"</span>, </span><br><span class="line">        <span class="string">"StartLimitAction"</span>: <span class="string">"none"</span>, </span><br><span class="line">        <span class="string">"StartLimitBurst"</span>: <span class="string">"5"</span>, </span><br><span class="line">        <span class="string">"StartLimitInterval"</span>: <span class="string">"10000000"</span>, </span><br><span class="line">        <span class="string">"StartupBlockIOWeight"</span>: <span class="string">"18446744073709551615"</span>, </span><br><span class="line">        <span class="string">"StartupCPUShares"</span>: <span class="string">"18446744073709551615"</span>, </span><br><span class="line">        <span class="string">"StatusErrno"</span>: <span class="string">"0"</span>, </span><br><span class="line">        <span class="string">"StopWhenUnneeded"</span>: <span class="string">"no"</span>, </span><br><span class="line">        <span class="string">"SubState"</span>: <span class="string">"running"</span>, </span><br><span class="line">        <span class="string">"SyslogLevelPrefix"</span>: <span class="string">"yes"</span>, </span><br><span class="line">        <span class="string">"SyslogPriority"</span>: <span class="string">"30"</span>, </span><br><span class="line">        <span class="string">"SystemCallErrorNumber"</span>: <span class="string">"0"</span>, </span><br><span class="line">        <span class="string">"TTYReset"</span>: <span class="string">"no"</span>, </span><br><span class="line">        <span class="string">"TTYVHangup"</span>: <span class="string">"no"</span>, </span><br><span class="line">        <span class="string">"TTYVTDisallocate"</span>: <span class="string">"no"</span>, </span><br><span class="line">        <span class="string">"TasksAccounting"</span>: <span class="string">"no"</span>, </span><br><span class="line">        <span class="string">"TasksCurrent"</span>: <span class="string">"18446744073709551615"</span>, </span><br><span class="line">        <span class="string">"TasksMax"</span>: <span class="string">"18446744073709551615"</span>, </span><br><span class="line">        <span class="string">"TimeoutStartUSec"</span>: <span class="string">"1min 30s"</span>, </span><br><span class="line">        <span class="string">"TimeoutStopUSec"</span>: <span class="string">"1min 30s"</span>, </span><br><span class="line">        <span class="string">"TimerSlackNSec"</span>: <span class="string">"50000"</span>, </span><br><span class="line">        <span class="string">"Transient"</span>: <span class="string">"no"</span>, </span><br><span class="line">        <span class="string">"Type"</span>: <span class="string">"simple"</span>, </span><br><span class="line">        <span class="string">"UMask"</span>: <span class="string">"0022"</span>, </span><br><span class="line">        <span class="string">"UnitFilePreset"</span>: <span class="string">"enabled"</span>, </span><br><span class="line">        <span class="string">"UnitFileState"</span>: <span class="string">"enabled"</span>, </span><br><span class="line">        <span class="string">"WantedBy"</span>: <span class="string">"cloud-init.service multi-user.target"</span>, </span><br><span class="line">        <span class="string">"Wants"</span>: <span class="string">"system.slice"</span>, </span><br><span class="line">        <span class="string">"WatchdogTimestamp"</span>: <span class="string">"Wed 2018-03-28 16:54:21 CST"</span>, </span><br><span class="line">        <span class="string">"WatchdogTimestampMonotonic"</span>: <span class="string">"39061722"</span>, </span><br><span class="line">        <span class="string">"WatchdogUSec"</span>: <span class="string">"0"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">192.168.101.6 | SUCCESS =&gt; &#123;</span><br><span class="line">    <span class="string">"changed"</span>: <span class="literal">false</span>, </span><br><span class="line">    <span class="string">"name"</span>: <span class="string">"sshd"</span>, </span><br><span class="line">    <span class="string">"state"</span>: <span class="string">"started"</span>, </span><br><span class="line">    <span class="string">"status"</span>: &#123;</span><br><span class="line">        <span class="string">"ActiveEnterTimestamp"</span>: <span class="string">"Wed 2018-03-28 16:54:25 CST"</span>, </span><br><span class="line">        <span class="string">"ActiveEnterTimestampMonotonic"</span>: <span class="string">"30808691"</span>, </span><br><span class="line">        <span class="string">"ActiveExitTimestamp"</span>: <span class="string">"Wed 2018-03-28 16:54:25 CST"</span>, </span><br><span class="line">        <span class="string">"ActiveExitTimestampMonotonic"</span>: <span class="string">"30789169"</span>, </span><br><span class="line">        <span class="string">"ActiveState"</span>: <span class="string">"active"</span>, </span><br><span class="line">        <span class="string">"After"</span>: <span class="string">"cloud-init.service basic.target network.target syslog.target systemd-journald.socket auditd.service system.slice"</span>, </span><br><span class="line">        <span class="string">"AllowIsolate"</span>: <span class="string">"no"</span>, </span><br><span class="line">        <span class="string">"AmbientCapabilities"</span>: <span class="string">"0"</span>, </span><br><span class="line">        <span class="string">"AssertResult"</span>: <span class="string">"yes"</span>, </span><br><span class="line">        <span class="string">"AssertTimestamp"</span>: <span class="string">"Wed 2018-03-28 16:54:25 CST"</span>, </span><br><span class="line">        <span class="string">"AssertTimestampMonotonic"</span>: <span class="string">"30792622"</span>, </span><br><span class="line">        <span class="string">"Before"</span>: <span class="string">"shutdown.target multi-user.target"</span>, </span><br><span class="line">        <span class="string">"BlockIOAccounting"</span>: <span class="string">"no"</span>, </span><br><span class="line">        <span class="string">"BlockIOWeight"</span>: <span class="string">"18446744073709551615"</span>, </span><br><span class="line">        <span class="string">"CPUAccounting"</span>: <span class="string">"no"</span>, </span><br><span class="line">        <span class="string">"CPUQuotaPerSecUSec"</span>: <span class="string">"infinity"</span>, </span><br><span class="line">        <span class="string">"CPUSchedulingPolicy"</span>: <span class="string">"0"</span>, </span><br><span class="line">        <span class="string">"CPUSchedulingPriority"</span>: <span class="string">"0"</span>, </span><br><span class="line">        <span class="string">"CPUSchedulingResetOnFork"</span>: <span class="string">"no"</span>, </span><br><span class="line">        <span class="string">"CPUShares"</span>: <span class="string">"18446744073709551615"</span>, </span><br><span class="line">        <span class="string">"CanIsolate"</span>: <span class="string">"no"</span>, </span><br><span class="line">        <span class="string">"CanReload"</span>: <span class="string">"yes"</span>, </span><br><span class="line">        <span class="string">"CanStart"</span>: <span class="string">"yes"</span>, </span><br><span class="line">        <span class="string">"CanStop"</span>: <span class="string">"yes"</span>, </span><br><span class="line">        <span class="string">"CapabilityBoundingSet"</span>: <span class="string">"18446744073709551615"</span>, </span><br><span class="line">        <span class="string">"ConditionResult"</span>: <span class="string">"yes"</span>, </span><br><span class="line">        <span class="string">"ConditionTimestamp"</span>: <span class="string">"Wed 2018-03-28 16:54:25 CST"</span>, </span><br><span class="line">        <span class="string">"ConditionTimestampMonotonic"</span>: <span class="string">"30792621"</span>, </span><br><span class="line">        <span class="string">"Conflicts"</span>: <span class="string">"shutdown.target"</span>, </span><br><span class="line">        <span class="string">"ControlGroup"</span>: <span class="string">"/system.slice/sshd.service"</span>, </span><br><span class="line">        <span class="string">"ControlPID"</span>: <span class="string">"0"</span>, </span><br><span class="line">        <span class="string">"DefaultDependencies"</span>: <span class="string">"yes"</span>, </span><br><span class="line">        <span class="string">"Delegate"</span>: <span class="string">"no"</span>, </span><br><span class="line">        <span class="string">"Description"</span>: <span class="string">"OpenSSH server daemon"</span>, </span><br><span class="line">        <span class="string">"DevicePolicy"</span>: <span class="string">"auto"</span>, </span><br><span class="line">        <span class="string">"EnvironmentFile"</span>: <span class="string">"/etc/sysconfig/sshd (ignore_errors=no)"</span>, </span><br><span class="line">        <span class="string">"ExecMainCode"</span>: <span class="string">"0"</span>, </span><br><span class="line">        <span class="string">"ExecMainExitTimestampMonotonic"</span>: <span class="string">"0"</span>, </span><br><span class="line">        <span class="string">"ExecMainPID"</span>: <span class="string">"944"</span>, </span><br><span class="line">        <span class="string">"ExecMainStartTimestamp"</span>: <span class="string">"Wed 2018-03-28 16:54:25 CST"</span>, </span><br><span class="line">        <span class="string">"ExecMainStartTimestampMonotonic"</span>: <span class="string">"30808580"</span>, </span><br><span class="line">        <span class="string">"ExecMainStatus"</span>: <span class="string">"0"</span>, </span><br><span class="line">        <span class="string">"ExecReload"</span>: <span class="string">"&#123; path=/bin/kill ; argv[]=/bin/kill -HUP <span class="variable">$MAINPID</span> ; ignore_errors=no ; start_time=[n/a] ; stop_time=[n/a] ; pid=0 ; code=(null) ; status=0/0 &#125;"</span>, </span><br><span class="line">        <span class="string">"ExecStart"</span>: <span class="string">"&#123; path=/usr/sbin/sshd ; argv[]=/usr/sbin/sshd -D <span class="variable">$OPTIONS</span> ; ignore_errors=no ; start_time=[Wed 2018-03-28 16:54:25 CST] ; stop_time=[n/a] ; pid=944 ; code=(null) ; status=0/0 &#125;"</span>, </span><br><span class="line">        <span class="string">"ExecStartPre"</span>: <span class="string">"&#123; path=/usr/sbin/sshd-keygen ; argv[]=/usr/sbin/sshd-keygen ; ignore_errors=no ; start_time=[Wed 2018-03-28 16:54:25 CST] ; stop_time=[Wed 2018-03-28 16:54:25 CST] ; pid=941 ; code=exited ; status=0 &#125;"</span>, </span><br><span class="line">        <span class="string">"FailureAction"</span>: <span class="string">"none"</span>, </span><br><span class="line">        <span class="string">"FileDescriptorStoreMax"</span>: <span class="string">"0"</span>, </span><br><span class="line">        <span class="string">"FragmentPath"</span>: <span class="string">"/usr/lib/systemd/system/sshd.service"</span>, </span><br><span class="line">        <span class="string">"GuessMainPID"</span>: <span class="string">"yes"</span>, </span><br><span class="line">        <span class="string">"IOScheduling"</span>: <span class="string">"0"</span>, </span><br><span class="line">        <span class="string">"Id"</span>: <span class="string">"sshd.service"</span>, </span><br><span class="line">        <span class="string">"IgnoreOnIsolate"</span>: <span class="string">"no"</span>, </span><br><span class="line">        <span class="string">"IgnoreOnSnapshot"</span>: <span class="string">"no"</span>, </span><br><span class="line">        <span class="string">"IgnoreSIGPIPE"</span>: <span class="string">"yes"</span>, </span><br><span class="line">        <span class="string">"InactiveEnterTimestamp"</span>: <span class="string">"Wed 2018-03-28 16:54:25 CST"</span>, </span><br><span class="line">        <span class="string">"InactiveEnterTimestampMonotonic"</span>: <span class="string">"30792148"</span>, </span><br><span class="line">        <span class="string">"InactiveExitTimestamp"</span>: <span class="string">"Wed 2018-03-28 16:54:25 CST"</span>, </span><br><span class="line">        <span class="string">"InactiveExitTimestampMonotonic"</span>: <span class="string">"30793292"</span>, </span><br><span class="line">        <span class="string">"JobTimeoutAction"</span>: <span class="string">"none"</span>, </span><br><span class="line">        <span class="string">"JobTimeoutUSec"</span>: <span class="string">"0"</span>, </span><br><span class="line">        <span class="string">"KillMode"</span>: <span class="string">"process"</span>, </span><br><span class="line">        <span class="string">"KillSignal"</span>: <span class="string">"15"</span>, </span><br><span class="line">        <span class="string">"LimitAS"</span>: <span class="string">"18446744073709551615"</span>, </span><br><span class="line">        <span class="string">"LimitCORE"</span>: <span class="string">"18446744073709551615"</span>, </span><br><span class="line">        <span class="string">"LimitCPU"</span>: <span class="string">"18446744073709551615"</span>, </span><br><span class="line">        <span class="string">"LimitDATA"</span>: <span class="string">"18446744073709551615"</span>, </span><br><span class="line">        <span class="string">"LimitFSIZE"</span>: <span class="string">"18446744073709551615"</span>, </span><br><span class="line">        <span class="string">"LimitLOCKS"</span>: <span class="string">"18446744073709551615"</span>, </span><br><span class="line">        <span class="string">"LimitMEMLOCK"</span>: <span class="string">"65536"</span>, </span><br><span class="line">        <span class="string">"LimitMSGQUEUE"</span>: <span class="string">"819200"</span>, </span><br><span class="line">        <span class="string">"LimitNICE"</span>: <span class="string">"0"</span>, </span><br><span class="line">        <span class="string">"LimitNOFILE"</span>: <span class="string">"4096"</span>, </span><br><span class="line">        <span class="string">"LimitNPROC"</span>: <span class="string">"14644"</span>, </span><br><span class="line">        <span class="string">"LimitRSS"</span>: <span class="string">"18446744073709551615"</span>, </span><br><span class="line">        <span class="string">"LimitRTPRIO"</span>: <span class="string">"0"</span>, </span><br><span class="line">        <span class="string">"LimitRTTIME"</span>: <span class="string">"18446744073709551615"</span>, </span><br><span class="line">        <span class="string">"LimitSIGPENDING"</span>: <span class="string">"14644"</span>, </span><br><span class="line">        <span class="string">"LimitSTACK"</span>: <span class="string">"18446744073709551615"</span>, </span><br><span class="line">        <span class="string">"LoadState"</span>: <span class="string">"loaded"</span>, </span><br><span class="line">        <span class="string">"MainPID"</span>: <span class="string">"944"</span>, </span><br><span class="line">        <span class="string">"MemoryAccounting"</span>: <span class="string">"no"</span>, </span><br><span class="line">        <span class="string">"MemoryCurrent"</span>: <span class="string">"18446744073709551615"</span>, </span><br><span class="line">        <span class="string">"MemoryLimit"</span>: <span class="string">"18446744073709551615"</span>, </span><br><span class="line">        <span class="string">"MountFlags"</span>: <span class="string">"0"</span>, </span><br><span class="line">        <span class="string">"Names"</span>: <span class="string">"sshd.service"</span>, </span><br><span class="line">        <span class="string">"NeedDaemonReload"</span>: <span class="string">"no"</span>, </span><br><span class="line">        <span class="string">"Nice"</span>: <span class="string">"0"</span>, </span><br><span class="line">        <span class="string">"NoNewPrivileges"</span>: <span class="string">"no"</span>, </span><br><span class="line">        <span class="string">"NonBlocking"</span>: <span class="string">"no"</span>, </span><br><span class="line">        <span class="string">"NotifyAccess"</span>: <span class="string">"none"</span>, </span><br><span class="line">        <span class="string">"OOMScoreAdjust"</span>: <span class="string">"0"</span>, </span><br><span class="line">        <span class="string">"OnFailureJobMode"</span>: <span class="string">"replace"</span>, </span><br><span class="line">        <span class="string">"PermissionsStartOnly"</span>: <span class="string">"no"</span>, </span><br><span class="line">        <span class="string">"PrivateDevices"</span>: <span class="string">"no"</span>, </span><br><span class="line">        <span class="string">"PrivateNetwork"</span>: <span class="string">"no"</span>, </span><br><span class="line">        <span class="string">"PrivateTmp"</span>: <span class="string">"no"</span>, </span><br><span class="line">        <span class="string">"ProtectHome"</span>: <span class="string">"no"</span>, </span><br><span class="line">        <span class="string">"ProtectSystem"</span>: <span class="string">"no"</span>, </span><br><span class="line">        <span class="string">"RefuseManualStart"</span>: <span class="string">"no"</span>, </span><br><span class="line">        <span class="string">"RefuseManualStop"</span>: <span class="string">"no"</span>, </span><br><span class="line">        <span class="string">"RemainAfterExit"</span>: <span class="string">"no"</span>, </span><br><span class="line">        <span class="string">"Requires"</span>: <span class="string">"basic.target"</span>, </span><br><span class="line">        <span class="string">"Restart"</span>: <span class="string">"on-failure"</span>, </span><br><span class="line">        <span class="string">"RestartUSec"</span>: <span class="string">"42s"</span>, </span><br><span class="line">        <span class="string">"Result"</span>: <span class="string">"success"</span>, </span><br><span class="line">        <span class="string">"RootDirectoryStartOnly"</span>: <span class="string">"no"</span>, </span><br><span class="line">        <span class="string">"RuntimeDirectoryMode"</span>: <span class="string">"0755"</span>, </span><br><span class="line">        <span class="string">"SameProcessGroup"</span>: <span class="string">"no"</span>, </span><br><span class="line">        <span class="string">"SecureBits"</span>: <span class="string">"0"</span>, </span><br><span class="line">        <span class="string">"SendSIGHUP"</span>: <span class="string">"no"</span>, </span><br><span class="line">        <span class="string">"SendSIGKILL"</span>: <span class="string">"yes"</span>, </span><br><span class="line">        <span class="string">"Slice"</span>: <span class="string">"system.slice"</span>, </span><br><span class="line">        <span class="string">"StandardError"</span>: <span class="string">"inherit"</span>, </span><br><span class="line">        <span class="string">"StandardInput"</span>: <span class="string">"null"</span>, </span><br><span class="line">        <span class="string">"StandardOutput"</span>: <span class="string">"journal"</span>, </span><br><span class="line">        <span class="string">"StartLimitAction"</span>: <span class="string">"none"</span>, </span><br><span class="line">        <span class="string">"StartLimitBurst"</span>: <span class="string">"5"</span>, </span><br><span class="line">        <span class="string">"StartLimitInterval"</span>: <span class="string">"10000000"</span>, </span><br><span class="line">        <span class="string">"StartupBlockIOWeight"</span>: <span class="string">"18446744073709551615"</span>, </span><br><span class="line">        <span class="string">"StartupCPUShares"</span>: <span class="string">"18446744073709551615"</span>, </span><br><span class="line">        <span class="string">"StatusErrno"</span>: <span class="string">"0"</span>, </span><br><span class="line">        <span class="string">"StopWhenUnneeded"</span>: <span class="string">"no"</span>, </span><br><span class="line">        <span class="string">"SubState"</span>: <span class="string">"running"</span>, </span><br><span class="line">        <span class="string">"SyslogLevelPrefix"</span>: <span class="string">"yes"</span>, </span><br><span class="line">        <span class="string">"SyslogPriority"</span>: <span class="string">"30"</span>, </span><br><span class="line">        <span class="string">"SystemCallErrorNumber"</span>: <span class="string">"0"</span>, </span><br><span class="line">        <span class="string">"TTYReset"</span>: <span class="string">"no"</span>, </span><br><span class="line">        <span class="string">"TTYVHangup"</span>: <span class="string">"no"</span>, </span><br><span class="line">        <span class="string">"TTYVTDisallocate"</span>: <span class="string">"no"</span>, </span><br><span class="line">        <span class="string">"TasksAccounting"</span>: <span class="string">"no"</span>, </span><br><span class="line">        <span class="string">"TasksCurrent"</span>: <span class="string">"18446744073709551615"</span>, </span><br><span class="line">        <span class="string">"TasksMax"</span>: <span class="string">"18446744073709551615"</span>, </span><br><span class="line">        <span class="string">"TimeoutStartUSec"</span>: <span class="string">"1min 30s"</span>, </span><br><span class="line">        <span class="string">"TimeoutStopUSec"</span>: <span class="string">"1min 30s"</span>, </span><br><span class="line">        <span class="string">"TimerSlackNSec"</span>: <span class="string">"50000"</span>, </span><br><span class="line">        <span class="string">"Transient"</span>: <span class="string">"no"</span>, </span><br><span class="line">        <span class="string">"Type"</span>: <span class="string">"simple"</span>, </span><br><span class="line">        <span class="string">"UMask"</span>: <span class="string">"0022"</span>, </span><br><span class="line">        <span class="string">"UnitFilePreset"</span>: <span class="string">"enabled"</span>, </span><br><span class="line">        <span class="string">"UnitFileState"</span>: <span class="string">"enabled"</span>, </span><br><span class="line">        <span class="string">"WantedBy"</span>: <span class="string">"multi-user.target cloud-init.service"</span>, </span><br><span class="line">        <span class="string">"Wants"</span>: <span class="string">"system.slice"</span>, </span><br><span class="line">        <span class="string">"WatchdogTimestamp"</span>: <span class="string">"Wed 2018-03-28 16:54:25 CST"</span>, </span><br><span class="line">        <span class="string">"WatchdogTimestampMonotonic"</span>: <span class="string">"30808640"</span>, </span><br><span class="line">        <span class="string">"WatchdogUSec"</span>: <span class="string">"0"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="5、yum"><a href="#5、yum" class="headerlink" title="5、yum"></a>5、yum</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@litw-docker ~]<span class="comment"># ansible test -m yum -a "name=vim state=present"</span></span><br><span class="line">192.168.101.6 | SUCCESS =&gt; &#123;</span><br><span class="line">    <span class="string">"changed"</span>: <span class="literal">true</span>, </span><br><span class="line">    <span class="string">"msg"</span>: <span class="string">""</span>, </span><br><span class="line">    <span class="string">"rc"</span>: 0, </span><br><span class="line">    <span class="string">"results"</span>: [</span><br><span class="line">        <span class="string">"Loaded plugins: fastestmirror\nLoading mirror speeds from cached hostfile\n * base: mirrors.aliyun.com\n * extras: mirrors.aliyun.com\n * updates: mirrors.cn99.com\nResolving Dependencies\n--&gt; Running transaction check\n---&gt; Package vim-enhanced.x86_64 2:7.4.160-2.el7 will be installed\n--&gt;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">内容太多，只摘取部分。</span></span><br></pre></td></tr></table></figure>
+<h1 id="6、script"><a href="#6、script" class="headerlink" title="6、script"></a>6、script</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">[root@litw-docker ~]<span class="comment"># ansible test -m script -a "/root/ping.sh"</span></span><br><span class="line">192.168.101.6 | SUCCESS =&gt; &#123;</span><br><span class="line">    <span class="string">"changed"</span>: <span class="literal">true</span>, </span><br><span class="line">    <span class="string">"rc"</span>: 0, </span><br><span class="line">    <span class="string">"stderr"</span>: <span class="string">"Shared connection to 192.168.101.6 closed.\r\n"</span>, </span><br><span class="line">    <span class="string">"stdout"</span>: <span class="string">"PING 192.168.101.1 (192.168.101.1) 56(84) bytes of data.\r\n64 bytes from 192.168.101.1: icmp_seq=1 ttl=64 time=1.20 ms\r\n64 bytes from 192.168.101.1: icmp_seq=2 ttl=64 time=0.383 ms\r\n64 bytes from 192.168.101.1: icmp_seq=3 ttl=64 time=0.359 ms\r\n64 bytes from 192.168.101.1: icmp_seq=4 ttl=64 time=0.388 ms\r\n64 bytes from 192.168.101.1: icmp_seq=5 ttl=64 time=1.48 ms\r\n\r\n--- 192.168.101.1 ping statistics ---\r\n5 packets transmitted, 5 received, 0% packet loss, time 4001ms\r\nrtt min/avg/max/mdev = 0.359/0.764/1.488/0.485 ms\r\n"</span>, </span><br><span class="line">    <span class="string">"stdout_lines"</span>: [</span><br><span class="line">        <span class="string">"PING 192.168.101.1 (192.168.101.1) 56(84) bytes of data."</span>, </span><br><span class="line">        <span class="string">"64 bytes from 192.168.101.1: icmp_seq=1 ttl=64 time=1.20 ms"</span>, </span><br><span class="line">        <span class="string">"64 bytes from 192.168.101.1: icmp_seq=2 ttl=64 time=0.383 ms"</span>, </span><br><span class="line">        <span class="string">"64 bytes from 192.168.101.1: icmp_seq=3 ttl=64 time=0.359 ms"</span>, </span><br><span class="line">        <span class="string">"64 bytes from 192.168.101.1: icmp_seq=4 ttl=64 time=0.388 ms"</span>, </span><br><span class="line">        <span class="string">"64 bytes from 192.168.101.1: icmp_seq=5 ttl=64 time=1.48 ms"</span>, </span><br><span class="line">        <span class="string">""</span>, </span><br><span class="line">        <span class="string">"--- 192.168.101.1 ping statistics ---"</span>, </span><br><span class="line">        <span class="string">"5 packets transmitted, 5 received, 0% packet loss, time 4001ms"</span>, </span><br><span class="line">        <span class="string">"rtt min/avg/max/mdev = 0.359/0.764/1.488/0.485 ms"</span></span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br><span class="line">192.168.101.11 | SUCCESS =&gt; &#123;</span><br><span class="line">    <span class="string">"changed"</span>: <span class="literal">true</span>, </span><br><span class="line">    <span class="string">"rc"</span>: 0, </span><br><span class="line">    <span class="string">"stderr"</span>: <span class="string">"Shared connection to 192.168.101.11 closed.\r\n"</span>, </span><br><span class="line">    <span class="string">"stdout"</span>: <span class="string">"PING 192.168.101.1 (192.168.101.1) 56(84) bytes of data.\r\n64 bytes from 192.168.101.1: icmp_seq=1 ttl=64 time=0.810 ms\r\n64 bytes from 192.168.101.1: icmp_seq=2 ttl=64 time=0.517 ms\r\n64 bytes from 192.168.101.1: icmp_seq=3 ttl=64 time=0.544 ms\r\n64 bytes from 192.168.101.1: icmp_seq=4 ttl=64 time=0.563 ms\r\n64 bytes from 192.168.101.1: icmp_seq=5 ttl=64 time=1.59 ms\r\n\r\n--- 192.168.101.1 ping statistics ---\r\n5 packets transmitted, 5 received, 0% packet loss, time 4000ms\r\nrtt min/avg/max/mdev = 0.517/0.806/1.599/0.411 ms\r\n"</span>, </span><br><span class="line">    <span class="string">"stdout_lines"</span>: [</span><br><span class="line">        <span class="string">"PING 192.168.101.1 (192.168.101.1) 56(84) bytes of data."</span>, </span><br><span class="line">        <span class="string">"64 bytes from 192.168.101.1: icmp_seq=1 ttl=64 time=0.810 ms"</span>, </span><br><span class="line">        <span class="string">"64 bytes from 192.168.101.1: icmp_seq=2 ttl=64 time=0.517 ms"</span>, </span><br><span class="line">        <span class="string">"64 bytes from 192.168.101.1: icmp_seq=3 ttl=64 time=0.544 ms"</span>, </span><br><span class="line">        <span class="string">"64 bytes from 192.168.101.1: icmp_seq=4 ttl=64 time=0.563 ms"</span>, </span><br><span class="line">        <span class="string">"64 bytes from 192.168.101.1: icmp_seq=5 ttl=64 time=1.59 ms"</span>, </span><br><span class="line">        <span class="string">""</span>, </span><br><span class="line">        <span class="string">"--- 192.168.101.1 ping statistics ---"</span>, </span><br><span class="line">        <span class="string">"5 packets transmitted, 5 received, 0% packet loss, time 4000ms"</span>, </span><br><span class="line">        <span class="string">"rtt min/avg/max/mdev = 0.517/0.806/1.599/0.411 ms"</span></span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: 'Donate', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: 'https://raw.githubusercontent.com/Tyronelitw/Tyronelitw.github.io/hexo/source/about/donate/images/WeChatQR.jpg',
+  alipayImage: 'https://raw.githubusercontent.com/Tyronelitw/Tyronelitw.github.io/hexo/source/about/donate/images/AliPayQR.jpg'
+});
+</script>
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>Post author:  </strong>Tangwei Li
+          </li>
+          <li class="post-copyright-link">
+          <strong>Post link:  </strong>
+          <a href="/2018/04/08/ansible安装和基本使用/" target="_blank" title="ansible安装和基本使用">https://Tyronelitw.github.io/2018/04/08/ansible安装和基本使用/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>Copyright Notice:   </strong>
+            All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            unless stating additionally.
+          </li>
+         
+        </ul>
+<div>
+</div></div>
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/11/16/test/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          test
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/04/02/hexo给文章添加分类和标签/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">hexo给文章添加分类和标签</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装配置"><span class="nav-number">1.</span> <span class="nav-text">安装配置</span></a></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#1、安装"><span class="nav-number"></span> <span class="nav-text">1、安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2、配置秘钥免密认证"><span class="nav-number"></span> <span class="nav-text">2、配置秘钥免密认证</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3、修改ansible配置hosts文件"><span class="nav-number"></span> <span class="nav-text">3、修改ansible配置hosts文件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ansible基本使用（模块）"><span class="nav-number">1.</span> <span class="nav-text">ansible基本使用（模块）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1、ping"><span class="nav-number"></span> <span class="nav-text">1、ping</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2、shell-command"><span class="nav-number"></span> <span class="nav-text">2、shell/command</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3、copy"><span class="nav-number"></span> <span class="nav-text">3、copy</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4、service"><span class="nav-number"></span> <span class="nav-text">4、service</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5、yum"><span class="nav-number"></span> <span class="nav-text">5、yum</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6、script"><span class="nav-number"></span> <span class="nav-text">6、script</span></a>
+    
+    </li></div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2018 - 2018 Tyronelitw的博客 All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				UV : <span id="busuanzi_value_site_uv"></span> |  
+				PV : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Tyronelitw的博客
+          </div>
+          <div class="panel-body">
+            Copyright © 2018 Tangwei Li All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>
