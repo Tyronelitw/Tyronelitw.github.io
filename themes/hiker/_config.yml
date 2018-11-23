@@ -160,7 +160,7 @@ show_busuanzi_view_counts: true
 
 
 # donation button
-danate:
+donate:
     enable: true
     message: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!'
     wechatImage: https://raw.githubusercontent.com/Tyronelitw/Tyronelitw.github.io/hexo/source/about/donate/images/WeChatQR.jpg
