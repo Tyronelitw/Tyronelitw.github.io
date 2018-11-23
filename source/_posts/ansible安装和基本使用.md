@@ -61,6 +61,7 @@ Number of key(s) added: 1
 
 Now try logging into the machine, with:   "ssh 'root@192.168.101.11'"
 and check to make sure that only the key(s) you wanted were added.
+<!--read more-->
 ```
 # 3、修改ansible配置hosts文件
 ```bash
